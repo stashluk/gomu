@@ -14,6 +14,7 @@ import (
 	"syscall"
 
 	"github.com/gdamore/tcell/v2"
+	"github.com/go-music-players/mpris"
 	"github.com/rivo/tview"
 	"github.com/ztrue/tracerr"
 
@@ -38,6 +39,7 @@ type Args struct {
 	empty   *bool
 	music   *string
 	version *bool
+	mpris   *bool
 }
 
 func getArgs() Args {
@@ -55,12 +57,14 @@ func getArgs() Args {
 	musicPath := filepath.Join(home, "Music")
 	musicFlag := flag.String("music", musicPath, "Specify music directory")
 	versionFlag := flag.Bool("version", false, "Print gomu version")
+	mprisFlag := flag.Bool("mpris", false, "Enable MPRIS2 support")
 	flag.Parse()
 	return Args{
 		config:  configFlag,
 		empty:   emptyFlag,
 		music:   musicFlag,
 		version: versionFlag,
+		mpris:   mprisFlag,
 	}
 }
 
@@ -368,6 +372,19 @@ func start(application *tview.Application, args Args) {
 
 	gomu.initPanels(application, args)
 	defineInternals()
+
+	// Initialize MPRIS if enabled
+	var mprisServer *mpris.Server
+	if *args.mpris {
+		adapter := NewMPRISAdapter(gomu)
+		var err error
+		mprisServer, err = mpris.NewServer("gomu", adapter)
+		if err != nil {
+			logError(tracerr.Wrap(err))
+		} else {
+			defer mprisServer.Close()
+		}
+	}
 
 	gomu.player.SetSongStart(func(audio player.Audio) {
 
