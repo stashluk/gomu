@@ -9,6 +9,7 @@ require (
 	github.com/faiface/beep v1.1.0
 	github.com/gdamore/tcell/v2 v2.5.4
 	github.com/go-music-players/mpris v0.1.0
+	github.com/go-music-players/xdg-dirs v0.1.0
 	github.com/gocolly/colly v1.2.0
 	github.com/mattn/anko v0.1.9
 	github.com/rivo/tview v0.0.0-20230104153304-892d1a2eb0da

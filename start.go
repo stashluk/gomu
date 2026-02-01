@@ -15,6 +15,7 @@ import (
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/go-music-players/mpris"
+	xdgdirs "github.com/go-music-players/xdg-dirs"
 	"github.com/rivo/tview"
 	"github.com/ztrue/tracerr"
 
@@ -43,18 +44,37 @@ type Args struct {
 }
 
 func getArgs() Args {
-	cfd, err := os.UserConfigDir()
+	// Use XDG-compliant directories
+	dirs, err := xdgdirs.New("gomu")
 	if err != nil {
 		logError(tracerr.Wrap(err))
 	}
-	configPath := filepath.Join(cfd, "gomu", "config")
+
+	var configPath string
+	var musicPath string
+	if dirs != nil {
+		configPath = filepath.Join(dirs.Config, "config")
+		// Try to determine music directory
+		home, err := os.UserHomeDir()
+		if err == nil {
+			musicPath = filepath.Join(home, "Music")
+		}
+	} else {
+		// Fallback to old behavior
+		cfd, err := os.UserConfigDir()
+		if err != nil {
+			logError(tracerr.Wrap(err))
+		}
+		configPath = filepath.Join(cfd, "gomu", "config")
+		home, err := os.UserHomeDir()
+		if err != nil {
+			logError(tracerr.Wrap(err))
+		}
+		musicPath = filepath.Join(home, "Music")
+	}
+
 	configFlag := flag.String("config", configPath, "Specify config file")
 	emptyFlag := flag.Bool("empty", false, "Open gomu with empty queue. Does not override previous queue")
-	home, err := os.UserHomeDir()
-	if err != nil {
-		logError(tracerr.Wrap(err))
-	}
-	musicPath := filepath.Join(home, "Music")
 	musicFlag := flag.String("music", musicPath, "Specify music directory")
 	versionFlag := flag.Bool("version", false, "Print gomu version")
 	mprisFlag := flag.Bool("mpris", false, "Enable MPRIS2 support")

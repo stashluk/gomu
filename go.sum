@@ -39,6 +39,8 @@ github.com/go-audio/riff v1.0.0/go.mod h1:l3cQwc85y79NQFCRB7TiPoNiaijp6q8Z0Uv38r
 github.com/go-audio/wav v1.0.0/go.mod h1:3yoReyQOsiARkvPl3ERCi8JFjihzG6WhjYpZCf5zAWE=
 github.com/go-music-players/mpris v0.1.0 h1:+4wyIL4HdfUX8crlYokWnLULKh9l2OSEoq7Z/3ArrR4=
 github.com/go-music-players/mpris v0.1.0/go.mod h1:CG1C0OaeTMiWs9EVHtHWBme1DjEXs/0O8lUqWDaGeRY=
+github.com/go-music-players/xdg-dirs v0.1.0 h1:+Mo+rGIBg+IOgkUtgn8KKuEhbGt0BrMalcPlcOZNzwA=
+github.com/go-music-players/xdg-dirs v0.1.0/go.mod h1:GLqocFqlBnt+0Ek91P3v1BFykZS/pC2rv71K8CceAd8=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
